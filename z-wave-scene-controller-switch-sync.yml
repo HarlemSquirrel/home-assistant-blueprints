@@ -1,0 +1,38 @@
+blueprint:
+  name: Scene controller button sync
+  description: Toggle and sync the button LED of a Z-Wave scene controller to a switch or light. Built for Zooz ZEN32.
+  domain: automation
+  input:
+    zooz_switch:
+      name: Zooz Switch
+      description: List of available Zooz ZEN32 switches.
+      selector:
+        device:
+          integration: zwave_js
+          manufacturer: Zooz
+          model: ZEN32
+    target_switch:
+      name: Light or Switch
+      description: The light or switch to link to button
+      selector:
+        entity:
+          domain: 
+            - light
+            - switch
+    scene_button:
+      name: Scene Button
+      description: The button to link to light
+      selector:
+        select:
+          mode: dropdown
+          options:
+            - label: Scene 5 (Big Button)
+              value: '0' # param 1 for on/off, param 6 for color
+            - label: Scene 1 (Top Left)
+              value: '1' # param 2 for on/off, param 7 for color
+            - label: Scene 2 (Top Right)
+              value: '2' # param 3 for on/off, param 8 for color
+            - label: Scene 3 (Bottom Left)
+              value: '3' # param 4 for on/off, param 9 for color
+            - label: Scene 4 (Bottom Right)
+              value: '4' # param 5 for on/off, param 10 for colo
