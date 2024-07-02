@@ -27,8 +27,7 @@ blueprint:
           filter:
             domain: switch
             integration: zwave_js
-            supported_features:
-              - switch.turn_on
+            device_class: switch
             
 
 mode: single
