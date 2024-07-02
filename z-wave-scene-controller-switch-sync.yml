@@ -36,3 +36,29 @@ blueprint:
               value: '3' # param 4 for on/off, param 9 for color
             - label: Scene 4 (Bottom Right)
               value: '4' # param 5 for on/off, param 10 for colo
+
+mode: single
+max_exceeded: silent
+variables:
+  controller_id: !input 'zooz_switch'
+  switch_id: !input 'target_switch'
+  button_id: !input 'scene_button'
+  
+trigger:
+  - platform: state
+    entity_id: !input 'target_switch'
+
+action:
+- choose:
+  - conditions: '{{ is_state(switch_id, ''off'') }}' # target switch is off
+    sequence:
+      - parallel:
+          - service: switch.turn_off
+            target:
+              entity_id: switch.lr_scene_controller_button_{{ button_id | int + 1 }}_indication_binary
+  - conditions: '{{ is_state(switch_id, ''on'') }}' # target switch is on
+    sequence:
+      - parallel:
+          - service: switch.turn_on
+            target:
+              entity_id: switch.lr_scene_controller_button_{{ button_id | int + 1 }}_indication_binary
