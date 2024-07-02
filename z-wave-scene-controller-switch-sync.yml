@@ -21,21 +21,15 @@ blueprint:
             - switch
     scene_button:
       name: Scene Button
-      description: The button to link to light
+      description: The button to link to light where button 1 is the big button.
       selector:
-        select:
-          mode: dropdown
-          options:
-            - label: Scene 5 (Big Button)
-              value: '0' # param 1 for on/off, param 6 for color
-            - label: Scene 1 (Top Left)
-              value: '1' # param 2 for on/off, param 7 for color
-            - label: Scene 2 (Top Right)
-              value: '2' # param 3 for on/off, param 8 for color
-            - label: Scene 3 (Bottom Left)
-              value: '3' # param 4 for on/off, param 9 for color
-            - label: Scene 4 (Bottom Right)
-              value: '4' # param 5 for on/off, param 10 for colo
+        entity:
+          filter:
+            domain: switch
+            integration: zwave_js
+            supported_features:
+              - switch.turn_on
+            
 
 mode: single
 max_exceeded: silent
@@ -55,10 +49,10 @@ action:
       - parallel:
           - service: switch.turn_off
             target:
-              entity_id: switch.lr_scene_controller_button_{{ button_id | int + 1 }}_indication_binary
+              entity_id: button_id
   - conditions: '{{ is_state(switch_id, ''on'') }}' # target switch is on
     sequence:
       - parallel:
           - service: switch.turn_on
             target:
-              entity_id: switch.lr_scene_controller_button_{{ button_id | int + 1 }}_indication_binary
+              entity_id: button_id
