@@ -24,7 +24,7 @@ blueprint:
       description: The button to link to light where button 1 is the big button.
       selector:
         entity:
-          include_entities: {{ device_entities(!input 'zooz_switch') }}
+          #include_entities: {{ device_entities(!input 'zooz_switch') }}
           filter:
             domain: switch
             integration: zwave_js
